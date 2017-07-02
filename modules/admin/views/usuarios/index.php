@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
           'header'=>'<a href="#">Apellidos</a>',
           'value'=>'persona0.apellidos'
           ],
-            'cedula',
+          
              'login',
 
             ['class' => 'yii\grid\ActionColumn','template'=>'{view}{update}',

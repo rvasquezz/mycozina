@@ -21,24 +21,14 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id_usuario',
              [
               'attribute' => 'nombres',
-              'value' =>  Persona::findOne($model->cedula)->nombres.' '. Persona::findOne($model->cedula)->apellidos,
+              'value' =>  Persona::findOne($model->id_persona)->nombres.' '. Persona::findOne($model->id_persona)->apellidos,
               'label'=>'Nombres Y Apellidos'
             ],
-                        'cedula',
-            [
-              'attribute' => 'direccion',
-              'value' =>  Persona::findOne($model->cedula)->direccion,
-              'label'=>'Direccion'
-            ],
+
             [
               'attribute' => 'fnacimiento',
-              'value' =>  Persona::findOne($model->cedula)->fnacimiento,
+              'value' =>  Persona::findOne($model->id_persona)->fnacimiento,
               'label'=>'Fecha de Nacimiento'
-            ],
-                        [
-              'attribute' => 'correoe',
-              'value' =>  Persona::findOne($model->cedula)->correoe,
-              'label'=>'Correo'
             ],
 
              [

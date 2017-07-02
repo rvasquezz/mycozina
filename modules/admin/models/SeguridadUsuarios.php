@@ -41,11 +41,8 @@ class SeguridadUsuarios extends \yii\db\ActiveRecord implements IdentityInterfac
      */
     public function rules() {
         return [
-            [['cedula', 'password'], 'required'],
-            [['cedula'], 'integer'],
-            [['cedula'], 'unique', 'message' => 'cedula duplicada o repetida'],
-            [['login'], 'string', 'max' => 32],
-            [['email'], 'string', 'max' => 70],
+            [['password'], 'required'],
+            [['login'], 'unique', 'message' => 'El usuario ya existe'],
             [['password'], 'string', 'max' => 64],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"contraseña no son iguales" ]
             
@@ -68,15 +65,8 @@ class SeguridadUsuarios extends \yii\db\ActiveRecord implements IdentityInterfac
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCedula0() {
-        return $this->hasOne(Persona::className(), ['cedula' => 'cedula']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getPersona0() {
-        return $this->hasOne(Persona::className(), ['cedula' => 'cedula']);
+        return $this->hasOne(Persona::className(), ['id_persona' => 'id_persona']);
     }
 
     /**

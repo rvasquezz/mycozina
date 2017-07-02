@@ -26,56 +26,48 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 <script>                      //enviar formulario personas
 $('#validador').click(function(event) {
     // event.preventDefault();
+  var  expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
    var login=$('#seguridadusuarios-login').val();
    var password=$('#seguridadusuarios-password').val();
+   // var inputs= $('#form_usuario').serializeArray();
 
    if(!login)
    {
         alert('Debe colocar un login');
-        event.preventDefault();
+        return false;
    }
    if(!password)
    {
         alert('Debe colocar un password');
-        event.preventDefault();
+        return false;
    }
    if(password.length<6)
    {
         alert('Debe colocar un password con mas de 6 dígitos');
-        event.preventDefault();
+        return false;
    }
+    if ( !expr.test(login) )
+ {
+    alert("Error: La dirección de correo " + correoo + " es incorrecta.");
+    return false;
+}        
+
    
 });
 
-      $('#act_persona').show();
-     $('#ocultar_usuario').show();
-     $('#ocultar_cedula').show();
+    
      
-      $('#seguridadusuarios-cedula').attr('disabled', 'disabled');
-      $('#persona-cedula').attr('disabled', 'disabled');
+     
         $("#act_persona").click(function () {
           var sexo= $('input:radio[name="Persona[sexo]"]:checked').val();
-      var correoo  =$("#persona-correoe").val();
-        expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+     
 
-           if ( !expr.test(correoo) ){
-        alert("Error: La dirección de correo " + correoo + " es incorrecta.");
-        return false;
-                            }                 
-
-            cedulap = $("#persona-cedula").val();
+           
             nombrep = $("#persona-nombres").val();
             apellidop = $("#persona-apellidos").val();
             dirccionp = $("#persona-direccion").val()
-            if (cedulap == "") {
-                alert("Campo cedula esta vacio");
-                $("#persona-cedula").focus();
-                return false;
-            } else if (isNaN(parseInt(cedulap))) {
-                alert('campo cedula debe ser numerico');
-                $("persona-cedula").focus();
-                return false;
-            } else if (nombrep == "") {
+           
+           if (nombrep == "") {
                 alert(" campo nombre esta  vacio! ");
                 $("#persona-nombres").focus();
                 return false;
@@ -87,27 +79,26 @@ $('#validador').click(function(event) {
             $.ajax({
                 type: "POST",
                 url: 'actualizapersona',
-                data: {cedula: $('#persona-cedula').val(),
+                data: {
                     nombres: $('#persona-nombres').val(),
                     apellidos: $('#persona-apellidos').val(),
                     direccion: $('#persona-direccion').val(),
                     fnacimiento: $('#persona-fnacimiento').val(),
                     sexo:sexo,
-                    tlf1: $('#persona-tlf1').val(),
-                    correoe: $('#persona-correoe').val()
+                    tlf1: $('#persona-tlf1').val()
                     
                 },
                 success: function (response) {
                     console.log(response);
                     //limpiamos formulario personas al insertar datos de personas
-                    $('#persona-cedula').val('');
+                  
                     $('#persona-nombres').val('');
                     $('#persona-apellidos').val('');
                     $('#persona-direccion').val('');
-                    $('#persona-correoe').val('');
+                   
                     $('#persona-tlf1').val('');
                     $('#persona-fnacimiento').val('');
-                    $('#seguridadusuarios-cedula').val('');
+          
                     $('#mensajero').slideUp(500);
                     $('#seguridadusuarios-login').removeAttr("disabled").val('');
                     alert('Datos de personas Fueron Ingresados con Exito....');

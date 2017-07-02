@@ -15,29 +15,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>Please fill out the following fields to login:</p>
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'options' => ['class' => 'form-horizontal'],
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
+    <?php $form = ActiveForm::begin(); ?>  
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-        <?= $form->field($model, 'password')->passwordInput() ?>
-
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
-
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+     <div class="row form-group">
+        <div class="col-xs-6">
+            <div class="col-xs-6">
+                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
             </div>
-        </div>
 
+            <div class="col-xs-6">
+                <?= $form->field($model, 'password')->passwordInput() ?>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-lg-offset-1 col-lg-11">
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-6"></div>
+
+     </div>
     <?php ActiveForm::end(); ?>
         <?= yii\authclient\widgets\AuthChoice::widget([
                  'baseAuthUrl' => ['site/auth']

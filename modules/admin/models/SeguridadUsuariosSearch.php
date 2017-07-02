@@ -21,8 +21,8 @@ public $apellidos;
     public function rules()
     {
         return [
-            [['id_usuario', 'cedula'], 'integer'],
-            [['login', 'password','apellidos', 'nombre'], 'safe'],
+            [['id_usuario'], 'integer'],
+            [['login', 'password','apellidos', 'nombres'], 'safe'],
         ];
     }
 
@@ -59,9 +59,7 @@ public $apellidos;
         }
 
         $query->andFilterWhere([
-            'id_usuario' => $this->id_usuario,
-            //'cedula' => $this->cedula,
-            'persona.cedula' => $this->cedula,
+            'id_usuario' => $this->id_usuario
         ]);
 
         $query->andFilterWhere(['like', 'login', $this->login])

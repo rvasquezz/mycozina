@@ -56,6 +56,10 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionPa()
+    {
+        echo var_dump(Yii::$app->request->post());
+    }
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {

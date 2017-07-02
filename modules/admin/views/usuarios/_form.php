@@ -41,12 +41,7 @@ echo AlertBlock::widget([
                         </div>
                         <?php $form = ActiveForm::begin(['id' => 'form_personas']) ?>
                         <div class="main row">
-                            <div class="col-xs-12">
-
-                                <div class="col-xs-5">
-                                    <?= $form->field($person, 'cedula')->textInput(['placeholder' => 'introduzca cedula de la persona', 'maxlength' => '8','onKeyPress'=>'return soloNumeros(event)','onchange'=>"Buscar()"]); ?>
-                                </div>
-                          </div>
+                
                             <div class="col-xs-6">
                                 <?= $form->field($person, 'nombres')->textInput(['required' => true, 'placeholder' => 'introduzca nombre persona','onKeyPress'=>'return soloLetras(event)']); ?>
                             </div>
@@ -67,9 +62,7 @@ echo AlertBlock::widget([
                             <div class="col-xs-3">
                                 <?= $form->field($person, 'tlf1')->textInput(['placeholder' => 'telefono','onKeyPress'=>'return soloNumeros(event)'])->label('Telefono'); ?>
                             </div>
-                            <div class="col-xs-5">
-                                <?= $form->field($person, 'correoe')->textInput(['placeholder' => 'correo'])->label('Correo'); ?>
-                            </div>
+                           
                             <div class="col-xs-4">
                                 <?= $form->field($person, 'sexo')->radioList(array('F'=>'Femenino','M'=>'Masculino')); ?>
                             </div>
@@ -78,34 +71,28 @@ echo AlertBlock::widget([
                                 <div id="act_persona" style="display:none;">   
                                 <button  class="btn btn-primary" id="act_persona">Modificar</button>
                                 </div>
-                                <div id="div_insertapersona" style="display:none;"> 
+                                
                             <button type="button" id ="pan" class="btn btn-success">Crear Persona</button>
                             
-                        </div> <br><br>
+                         <br><br>
                          <!--<spam id="pan"><a href src="#">pan</a></spam> <br>-->
                     </div><!--panel-body-->
                 </div> <!--panel-->
             </div>
 
-            <div class="col-md-5 column" id="ocultar_usuario" hidden>
+            <div class="col-md-5 column" >
                 <div class="panel panel-primary">
                     <div class="panel-heading">DATOS DE USUARIO</div>
                     <div class="panel-body">
                         <?php $form = ActiveForm::begin(['id' => 'form_usuario']) ?>
                             
-                         <div hidden>
-                             
-                        
-                        <?= $form->field($model, 'cedula')->textInput(['placeholder' => 'introduzca cedula', 'maxlength' => '8','onKeyPress'=>'return soloNumeros(event)']) ?> 
-                        <input type="hidden" name="cedulausuario" id="cedulausuario" >
-                        <div id="div_validacedula" style="font-size:16px;color:red;display:none" ></div> <!--mensaje validar cedula usuario-->
-                         </div>   
+    
 
 
                         <?= $form->field($model, 'login')->textInput(['maxlength' => true, 'placeholder' => 'Introduzca usuario']) ?>
-<div id="ocultar_cedula" hidden>
+
                         <?= $form->field($model, 'password')->passwordInput(['maxlength' => true, 'placeholder' => 'introduzca password']) ?>
-</div>
+
                         <br><br>
 
  
