@@ -45,8 +45,8 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
             'auth' => [
-            'class' => 'yii\authclient\AuthAction',
-            'successCallback' => [$this, 'oAuthSuccess'],
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'oAuthSuccess'],
             ],
         ];
     }
@@ -100,6 +100,11 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    //registration
+    public function actionRegistration() 
+    {
+        return $this->render('registration');
+    }
 
     public function oAuthSuccess($client) {
       // get user data from client
@@ -107,27 +112,60 @@ class SiteController extends Controller
 
       // do some thing with user data. for example with $userAttributes['email']
     }
+
+    //login facebook
+    // public function successCallback($client)
+    // {
+    //     $attributes = $client->getUserAttributes();
+    //         // user login or signup comes here
+    //         /*
+    //         Checking facebook email registered yet?
+    //         Maxsure your registered email when login same with facebook email
+    //         die(print_r($attributes));
+    //         */
+            
+    //         $user = SeguridadUsuarios::find()->where(['email'=>$attributes['email']])->one();
+    //         if(!empty($user)){
+    //             Yii::$app->user->login($user);
+            
+    //         }else{
+    //             // Save session attribute user from FB
+    //             $session = Yii::$app->session;
+    //             $session['attributes']=$attributes;
+    //             // redirect to form signup, variabel global set to successUrl
+    //             $this->successUrl = \yii\helpers\Url::to(['/login']);
+    //         }
+    // }
+    // public $successUrl = 'Success';
+    // 
+    // 
     public function successCallback($client)
     {
         $attributes = $client->getUserAttributes();
-            // user login or signup comes here
-            /*
-            Checking facebook email registered yet?
-            Maxsure your registered email when login same with facebook email
-            die(print_r($attributes));
-            */
-            
-            $user = SeguridadUsuarios::find()->where(['email'=>$attributes['email']])->one();
-            if(!empty($user)){
-                Yii::$app->user->login($user);
-            
-            }else{
-                // Save session attribute user from FB
-                $session = Yii::$app->session;
-                $session['attributes']=$attributes;
-                // redirect to form signup, variabel global set to successUrl
-                $this->successUrl = \yii\helpers\Url::to(['/login']);
-            }
+        // user login or signup comes here
+        /*
+        Kalo di die(print_r($attributes));
+        maka akan keluar
+        Array ( [id] => https://www.google.com/accounts/o8/id?id=AItOawkSN3ecyrQAUOVyy9kuX-2oq-hahagake [namePerson/first] => Hafid [namePerson/last] => Mukhlasin [pref/language] => en [contact/email] => milisstudio@gmail.com [first_name] => Hafid [last_name] => Mukhlasin [email] => milisstudio@gmail.com [language] => en ) 
+
+        Nah data ini bisa kita gunakan untuk check apakah si user udah terdaftar ato belum..
+        */
+
+        $user = app\modules\admin\models\SeguridadUsuarios::find()
+            ->where([
+                'login'=>$attributes['email'],
+            ])
+            ->one();
+        if(!empty($user)){
+            Yii::$app->user->login($user);
+        }
+        else{
+            //Simpen disession attribute user dari Google
+            $session = Yii::$app->session;
+            $session['attributes']=$attributes;
+            // redirect ke form signup, dengan mengset nilai variabell global successUrl
+            $this->successUrl = \yii\helpers\Url::to(['login']);
+        }   
+
     }
-    public $successUrl = 'Success';
 }

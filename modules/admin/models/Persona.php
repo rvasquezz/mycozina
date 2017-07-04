@@ -7,19 +7,16 @@ use Yii;
 /**
  * This is the model class for table "persona".
  *
- * @property integer $cedula
- * @property string $correoe
+ * @property int $id_persona
  * @property string $tlf1
  * @property string $tlf2
  * @property string $apellidos
- * @property string $direccion
  * @property string $fnacimiento
  * @property string $nacionalidad
  * @property string $nombres
  * @property string $sexo
- *
- * @property Usuario[] $usuarios
- * @property SeguridadUsuarios[] $seguridadUsuarios
+ * @property int $id_persona_det
+ * @property string $fecha_create
  */
 class Persona extends \yii\db\ActiveRecord
 {
@@ -37,14 +34,13 @@ class Persona extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cedula', 'apellidos', 'direccion', 'nombres'], 'required'],
-            [['cedula'], 'integer'],
-            [['fnacimiento'], 'safe'],
-            [['correoe'], 'string', 'max' => 70],
+            [['id_persona', 'apellidos', 'nombres', 'id_persona_det', 'fecha_create'], 'required'],
+            [['id_persona', 'id_persona_det'], 'integer'],
+            [['fnacimiento', 'fecha_create'], 'safe'],
             [['tlf1', 'tlf2'], 'string', 'max' => 20],
             [['apellidos', 'nombres'], 'string', 'max' => 60],
-            [['direccion'], 'string', 'max' => 255],
-            [['nacionalidad', 'sexo'], 'string', 'max' => 1]
+            [['nacionalidad', 'sexo'], 'string', 'max' => 1],
+            [['id_persona'], 'unique'],
         ];
     }
 
@@ -54,32 +50,16 @@ class Persona extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'cedula' => Yii::t('app', 'Cedula'),
-            'correoe' => Yii::t('app', 'Correoe'),
+            'id_persona' => Yii::t('app', 'Id Persona'),
             'tlf1' => Yii::t('app', 'Tlf1'),
             'tlf2' => Yii::t('app', 'Tlf2'),
             'apellidos' => Yii::t('app', 'Apellidos'),
-            'direccion' => Yii::t('app', 'Direccion'),
             'fnacimiento' => Yii::t('app', 'Fnacimiento'),
             'nacionalidad' => Yii::t('app', 'Nacionalidad'),
             'nombres' => Yii::t('app', 'Nombres'),
             'sexo' => Yii::t('app', 'Sexo'),
+            'id_persona_det' => Yii::t('app', 'Id Persona Det'),
+            'fecha_create' => Yii::t('app', 'Fecha Create'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsuarios()
-    {
-        return $this->hasMany(Usuario::className(), ['persona' => 'cedula']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSeguridadUsuarios()
-    {
-        return $this->hasMany(SeguridadUsuarios::className(), ['cedula' => 'cedula']);
     }
 }

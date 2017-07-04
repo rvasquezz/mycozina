@@ -27,14 +27,14 @@ use yii\widgets\Breadcrumbs;
     <!-- Bootstrap core CSS -->
     <link href="<?php echo $this->theme->baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $this->theme->baseUrl ?>/css/font-awesome.min.css" rel="stylesheet">
-    <link href="<?php echo $this->theme->baseUrl ?>/css/animsition.min.css" rel="stylesheet">
+   <!--  <link href="<?php echo $this->theme->baseUrl ?>/css/animsition.min.css" rel="stylesheet"> -->
     <link href="<?php echo $this->theme->baseUrl ?>/css/animate.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="<?php echo $this->theme->baseUrl ?>/css/style.css" rel="stylesheet"> </head>
     <script src="<?php echo $this->theme->baseUrl ?>/js/jQuery-2.1.4.min.js"></script>
 <body class="home">
 <?php $this->beginBody() ?>
-    <div class="site-wrapper " data-animsition-in="fade-in" data-animsition-out="fade-out">
+    <div class="site-wrapper ">
         <!--header starts-->
         <header id="header" class="header-scroll top-header headrom">
             <!-- .navbar -->
@@ -52,7 +52,7 @@ use yii\widgets\Breadcrumbs;
                                 <div class="dropdown-menu"> <a class="dropdown-item" href="restaurants.php">Search results</a> <a class="dropdown-item" href="profile.php">Profile page</a></div>
                             </li>
                             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                <div class="dropdown-menu"> <a class="dropdown-item" href="pricing.php">Pricing</a> <a class="dropdown-item" href="contact.php">Contact</a> <a class="dropdown-item" href="submition.php">Submit restaurant</a> <a class="dropdown-item" href="registration.php">Registration</a>
+                                <div class="dropdown-menu"> <a class="dropdown-item" href="pricing.php">Pricing</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/contact"]) ?>">Contact</a> <a class="dropdown-item" href="submition.php">Submit restaurant</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/registration"]) ?>">Registration</a>
                                     <div class="dropdown-divider"></div> <a class="dropdown-item" href="checkout.php">Checkout</a> </div>
                             </li>
 
@@ -212,11 +212,33 @@ use yii\widgets\Breadcrumbs;
     <!-- Bootstrap core JavaScript
     ================================================== -->
 
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '143800462862668',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();   
+  };
 
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+});
+</script>
     
     <script src="<?php echo $this->theme->baseUrl ?>/js/tether.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap.min.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/animsition.min.js"></script>
+    <!-- <script src="<?php echo $this->theme->baseUrl ?>/js/animsition.min.js"></script> -->
     <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap-slider.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.isotope.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/headroom.js"></script>
