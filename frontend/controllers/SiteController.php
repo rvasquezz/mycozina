@@ -14,6 +14,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Auth;
 use common\models\User;
+use common\models\UsuarioDetalle;
 /**
  * Site controller
  */
@@ -277,6 +278,7 @@ class SiteController extends Controller
                 $user = $auth->user;
                 Yii::$app->user->login($user);
             } else { // signup
+                       
                 if($client->getId()=='facebook')
                 {
                     if (User::find()->where(['email' => $attributes['email']])->exists()) {
@@ -294,12 +296,28 @@ class SiteController extends Controller
                             'nombres' => $attributes['first_name'],
                             'apellidos'=>$attributes['last_name'],
                             'fnacimiento'=>isset($attributes['birthday']) ? $attributes['birthday'] : null,
-                            'sexo'=>$attributes['gender']
+                            'sexo'=>$attributes['gender'],
                         ]);
+                        $user_detalle=
                         $user->generateAuthKey();
                         $user->generatePasswordResetToken();
                         $transaction = $user->getDb()->beginTransaction();
                         if ($user->save()) {
+                            //crea datos en la tabla usuario detalle
+                            $user_detalle = new UsuarioDetalle();
+                            $user_detalle->id_tipo_usuario=1;
+                            $user_detalle->id_usuario=$user->id;
+                            if($user_detalle->save())
+                            {
+
+                            }
+                            else
+                            {
+                                print_r($user_detalle->getErrors());
+                                return false;
+                            }
+
+                            //crea datos en la tabla auth
                             $auth = new Auth([
                                 'user_id' => $user->id,
                                 'source' => $client->getId(),
@@ -339,11 +357,27 @@ class SiteController extends Controller
                             $user->generatePasswordResetToken();
                             $transaction = $user->getDb()->beginTransaction();
                             if ($user->save()) {
+                                //crea datos en la tabla usuario detalle
+                                $user_detalle = new UsuarioDetalle();
+                                $user_detalle->id_tipo_usuario=1;
+                                $user_detalle->id_usuario=$user->id;
+                                if($user_detalle->save())
+                                {
+
+                                }
+                                else
+                                {
+                                    print_r($user_detalle->getErrors());
+                                    return false;
+                                }
+                                //crea  datos en la tabla auth
                                 $auth = new Auth([
                                     'user_id' => $user->id,
                                     'source' => $client->getId(),
                                     'source_id' => (string)$attributes['id'],
                                 ]);
+
+                                
                                 if ($auth->save()) {
                                     $transaction->commit();
                                     Yii::$app->user->login($user);
