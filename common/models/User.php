@@ -31,7 +31,7 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
-
+    public $password_repeat;
 
     /**
      * @inheritdoc
@@ -59,6 +59,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password_hash', 'message' => 'Los passwords no coinciden'],
+            [['username'],'string']
         ];
     }
 

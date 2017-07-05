@@ -24,7 +24,7 @@
         "kartik-v/yii2-widgets": "*",
         "chrmorandi/yii2-jasper": "^0.8.0",
         "freshwork/transbank": "^0.1.8",
-        "yiisoft/yii2-authclient": "*",
+        "yiisoft/yii2-authclient": "2.0.6",
         "omnilight/yii2-shopping-cart": "~1.0"
     },
     "require-dev": {

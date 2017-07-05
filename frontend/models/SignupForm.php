@@ -12,8 +12,12 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
-
-
+    public $password_repeat;
+    public $fnacimiento;
+    public $sexo;
+    public $nombres;
+    public $apellidos;
+    public $tlf1;
     /**
      * @inheritdoc
      */
@@ -21,18 +25,19 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
-
+            [['fnacimiento'], 'safe'],
+            ['sexo', 'string'],
             ['email', 'trim'],
-            ['email', 'required'],
+            [['nombres','apellidos','username', 'email'], 'required'],
+            [['tlf1'], 'integer'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'La dirección de correo ya existe'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+             ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => 'Los passwords no coinciden'],
         ];
     }
 
@@ -50,6 +55,12 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->fnacimiento = $this->fnacimiento;
+        $user->sexo = $this->sexo;
+        $user->nombres = $this->nombres;
+        $user->apellidos = $this->apellidos;
+        $user->tlf1 = $this->tlf1;
+
         $user->setPassword($this->password);
         $user->generateAuthKey();
         

@@ -12,7 +12,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-
+use common\models\Auth;
+use common\models\User;
 /**
  * Site controller
  */
@@ -61,6 +62,10 @@ class SiteController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
             ],
         ];
     }
@@ -149,10 +154,40 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post())) 
+        {
+            $tipo= Yii::$app->request->post('options');
+
+            //si tipo es vacio es porque es cliente
+            if(!isset($tipo))
+            {
+                $tipo=1;
+            }
+
+            $model->username=$model->email;
             if ($user = $model->signup()) {
+
+                $auth = new Auth([
+                'user_id' => $user->id,
+                'source' => 'sistema'
+                ]);
+                if ($auth->save()) {
+                // Yii::$app->user->login($user);
+                } else {
+                print_r($auth->getErrors());
+                }
+
                 if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+                    if($tipo==2 || $tipo==3)
+                    {
+                        //crear vista para perfil de cocinero
+                        return $this->render('perfil_cocinero',['id_usuario'=>$user->id]);        
+                    }
+                    else
+                    {
+                        return $this->goHome();
+                    }
+                    
                 }
             }
         }
@@ -225,4 +260,113 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    //login por facebook
+    public function onAuthSuccess($client)
+    {
+       $attributes = $client->getUserAttributes();
+
+        /** @var Auth $auth */
+        $auth = Auth::find()->where([
+            'source' => $client->getId(),
+            'source_id' => $attributes['id'],
+        ])->one();
+
+        if (Yii::$app->user->isGuest) {
+            if ($auth) { // login
+                $user = $auth->user;
+                Yii::$app->user->login($user);
+            } else { // signup
+                if($client->getId()=='facebook')
+                {
+                    if (User::find()->where(['email' => $attributes['email']])->exists()) {
+                        Yii::$app->getSession()->setFlash('error', [
+                            Yii::t('app', "User with the same email as in {client} account already exists but isn't linked to it. Login using email first to link it.", ['client' => $client->getTitle()]),
+                        ]);
+                    } 
+                    else 
+                    {
+                        $password = Yii::$app->security->generateRandomString(6);
+                        $user = new User([
+                            'username' => $attributes['email'],
+                            'email' => $attributes['email'],
+                            'password' => $password,
+                            'nombres' => $attributes['first_name'],
+                            'apellidos'=>$attributes['last_name'],
+                            'fnacimiento'=>isset($attributes['birthday']) ? $attributes['birthday'] : null,
+                            'sexo'=>$attributes['gender']
+                        ]);
+                        $user->generateAuthKey();
+                        $user->generatePasswordResetToken();
+                        $transaction = $user->getDb()->beginTransaction();
+                        if ($user->save()) {
+                            $auth = new Auth([
+                                'user_id' => $user->id,
+                                'source' => $client->getId(),
+                                'source_id' => (string)$attributes['id'],
+                            ]);
+                            if ($auth->save()) {
+                                $transaction->commit();
+                                Yii::$app->user->login($user);
+                            } else {
+                                print_r($auth->getErrors());
+                            }
+                        } else {
+                            print_r($user->getErrors());
+                        }
+                    }
+                }
+                else
+                {       //
+                        if (User::find()->where(['email' => $attributes['emails']])->exists()) {
+                            Yii::$app->getSession()->setFlash('error', [
+                                Yii::t('app', "User with the same email as in {client} account already exists but isn't linked to it. Login using email first to link it.", ['client' => $client->getTitle()]),
+                            ]);
+                        } 
+                        else 
+                        {
+                            $password = Yii::$app->security->generateRandomString(6);
+                            $user = new User([
+                                'username' => $attributes['emails'],
+                                'email' => $attributes['emails'],
+                                'password' => $password,
+                                'nombres' => $attributes['person']['givenName'],
+                                'apellidos'=>$attributes['person']['familyName'],
+                                'fnacimiento'=>isset($attributes['birthday']) ? $attributes['birthday'] : null,
+                                'sexo'=>isset($attributes['gender']) ? $attributes['gender'] : null
+                            ]);
+                            $user->generateAuthKey();
+                            $user->generatePasswordResetToken();
+                            $transaction = $user->getDb()->beginTransaction();
+                            if ($user->save()) {
+                                $auth = new Auth([
+                                    'user_id' => $user->id,
+                                    'source' => $client->getId(),
+                                    'source_id' => (string)$attributes['id'],
+                                ]);
+                                if ($auth->save()) {
+                                    $transaction->commit();
+                                    Yii::$app->user->login($user);
+                                } else {
+                                    print_r($auth->getErrors());
+                                }
+                            } else {
+                                print_r($user->getErrors());
+                            }
+                        }
+                }
+
+            }
+        } else { // user already logged in
+            if (!$auth) { // add auth provider
+                $auth = new Auth([
+                    'user_id' => Yii::$app->user->id,
+                    'source' => $client->getId(),
+                    'source_id' => $attributes['id'],
+                ]);
+                $auth->save();
+            }
+        }
+    }
+
 }

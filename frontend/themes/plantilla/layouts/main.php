@@ -16,32 +16,35 @@ use yii\widgets\Breadcrumbs;
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="#">
-    <title>Starter Template for Bootstrap</title>
-    <!-- Bootstrap core CSS -->
-    <link href="<?php echo $this->theme->baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo $this->theme->baseUrl ?>/css/font-awesome.min.css" rel="stylesheet">
-    <link href="<?php echo $this->theme->baseUrl ?>/css/animsition.min.css" rel="stylesheet">
-    <link href="<?php echo $this->theme->baseUrl ?>/css/animate.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="<?php echo $this->theme->baseUrl ?>/css/style.css" rel="stylesheet"> </head>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/jQuery-2.1.4.min.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="#">
+        <title>Starter Template for Bootstrap</title>
+        
+
+        <link href="<?php echo $this->theme->baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo $this->theme->baseUrl ?>/css/font-awesome.min.css" rel="stylesheet">
+        <link href="<?php echo $this->theme->baseUrl ?>/css/animsition.min.css" rel="stylesheet">
+        <link href="<?php echo $this->theme->baseUrl ?>/css/animate.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="<?php echo $this->theme->baseUrl ?>/css/style.css" rel="stylesheet">
+    </head>
+    
 <body class="home">
 <?php $this->beginBody() ?>
-     <div class="site-wrapper " data-animsition-in="fade-in" data-animsition-out="fade-out">
+  <!-- <div class="site-wrapper animsition" data-animsition-in="fade-in" data-animsition-out="fade-out"> -->
+     <!-- <div class="site-wrapper " > -->
         <!--header starts-->
         <header id="header" class="header-scroll top-header headrom">
             <!-- .navbar -->
             <nav class="navbar navbar-dark">
                 <div class="container">
                     <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#mainNavbarCollapse">&#9776;</button>
-                    <a class="navbar-brand" href="<?= yii\helpers\Url::to(["/site/index"]) ?>"> <img class="img-rounded" src="<?php echo $this->theme->baseUrl ?>/images/food-picky-logo.png" alt=""> </a>
+                    <a class="navbar-brand" href="<?= yii\helpers\Url::to(["/site/index"]) ?>"> <img class="img-rounded" src="<?php echo $this->theme->baseUrl ?>/images/eslogan1.png" alt=""> </a>
                     <div class="collapse navbar-toggleable-md  float-lg-right" id="mainNavbarCollapse">
                         <ul class="nav navbar-nav">
                             <li class="nav-item"> <a class="nav-link active" href="<?= yii\helpers\Url::to(["/site/index"]) ?>">Home <span class="sr-only">(current)</span></a> </li>
@@ -58,7 +61,12 @@ use yii\widgets\Breadcrumbs;
 
                              <li class="nav-item dropdown">  
                             <?php if (!Yii::$app->user->isGuest): ?>
-                                <a href="<?= yii\helpers\Url::to(["/site/logout"]) ?>" class="btn btn-default btn-flat" title="salir"> <span class="glyphicon glyphicon-log-out">Salir</span></a>
+                                   <?= Html::beginForm(['/site/logout'], 'post')
+                                    . Html::submitButton(
+                                        'Logout (' . Yii::$app->user->identity->nombres.' '.Yii::$app->user->identity->apellidos.')',
+                                        ['class' => 'btn btn-link logout']
+                                    )
+                                    . Html::endForm(); ?>
                              <?php endif; ?>
 
                              <?php if (Yii::$app->user->isGuest): ?>
@@ -117,7 +125,7 @@ use yii\widgets\Breadcrumbs;
                 <!-- top footer statrs -->
                 <div class="row top-footer">
                     <div class="col-xs-12 col-sm-3 footer-logo-block color-gray">
-                        <a href="#"> <img src="<?php echo $this->theme->baseUrl ?>/images/food-picky-logo.png" alt="Footer logo"> </a> <span>Order Delivery &amp; Take-Out </span> </div>
+                        <a href="#"> <img src="<?php echo $this->theme->baseUrl ?>/images/nombre.png" alt="Footer logo"> </a> <span>Order Delivery &amp; Take-Out </span> </div>
                     <div class="col-xs-12 col-sm-2 about color-gray">
                         <h5>About Us</h5>
                         <ul>
@@ -201,35 +209,13 @@ use yii\widgets\Breadcrumbs;
             </div>
         </footer>
         <!-- end:Footer -->
-    </div>
+    <!-- </div> -->
     <!--/end:Site wrapper -->
     <!-- Bootstrap core JavaScript
     ================================================== -->
 
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '143800462862668',
-      cookie     : true,
-      xfbml      : true,
-      version    : 'v2.8'
-    });
-    FB.AppEvents.logPageView();   
-  };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-});
-</script>
-    
+   <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/tether.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/animsition.min.js"></script>
@@ -237,10 +223,18 @@ use yii\widgets\Breadcrumbs;
     <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.isotope.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/headroom.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/foodpicky.min.js"></script>
+
+<!--     <script src="<?php echo $this->theme->baseUrl ?>/js/tether.min.js"></script>
+    <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap.min.js"></script>
+    <script src="<?php echo $this->theme->baseUrl ?>/js/animsition.min.js"></script> 
+    <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap-slider.min.js"></script>
+    <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.isotope.min.js"></script>
+    <script src="<?php echo $this->theme->baseUrl ?>/js/headroom.js"></script>
+    <script src="<?php echo $this->theme->baseUrl ?>/js/foodpicky.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap-slider.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/markerclusterer.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.googlemap.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/data.json"></script>
+    <script src="<?php echo $this->theme->baseUrl ?>/js/data.json"></script> -->
     <?php $this->endBody(); ?>
 </body>
 </html>
