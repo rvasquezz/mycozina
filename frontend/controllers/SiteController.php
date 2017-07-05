@@ -157,13 +157,15 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) 
         {
-            $tipo= Yii::$app->request->post('options');
+            $tipo=Yii::$app->request->post('options');
 
             //si tipo es vacio es porque es cliente
             if(!isset($tipo))
             {
                 $tipo=1;
             }
+
+
 
             $model->username=$model->email;
             if ($user = $model->signup()) {
@@ -173,7 +175,19 @@ class SiteController extends Controller
                 'source' => 'sistema'
                 ]);
                 if ($auth->save()) {
-                // Yii::$app->user->login($user);
+                    //crea datos en la tabla usuario detalle
+                    $user_detalle = new UsuarioDetalle();
+                    $user_detalle->id_tipo_usuario=$tipo;
+                    $user_detalle->id_usuario=$user->id;
+                    if($user_detalle->save())
+                    {
+
+                    }
+                    else
+                    {
+                        print_r($user_detalle->getErrors());
+                        return false;
+                    }
                 } else {
                 print_r($auth->getErrors());
                 }
@@ -298,7 +312,6 @@ class SiteController extends Controller
                             'fnacimiento'=>isset($attributes['birthday']) ? $attributes['birthday'] : null,
                             'sexo'=>$attributes['gender'],
                         ]);
-                        $user_detalle=
                         $user->generateAuthKey();
                         $user->generatePasswordResetToken();
                         $transaction = $user->getDb()->beginTransaction();
