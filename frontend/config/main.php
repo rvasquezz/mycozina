@@ -11,6 +11,10 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'es',
+    'modules'=>[
+        'gridview' => ['class' => 'kartik\grid\Module']
+
+    ],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         //login facebook/gmail

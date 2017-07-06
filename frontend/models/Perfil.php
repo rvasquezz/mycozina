@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use common\models\User;
 
 /**
  * This is the model class for table "perfil".
@@ -47,4 +48,10 @@ class Perfil extends \yii\db\ActiveRecord
             'foto' => Yii::t('app', 'Foto'),
         ];
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_usuario']);
+    }
+    
 }

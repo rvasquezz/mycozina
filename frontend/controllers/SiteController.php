@@ -166,7 +166,8 @@ class SiteController extends Controller
             }
 
 
-
+            $model->nombres=strtoupper($model->nombres);
+            $model->apellidos=strtoupper($model->apellidos);
             $model->username=$model->email;
             if ($user = $model->signup()) {
 
@@ -307,8 +308,8 @@ class SiteController extends Controller
                             'username' => $attributes['email'],
                             'email' => $attributes['email'],
                             'password' => $password,
-                            'nombres' => $attributes['first_name'],
-                            'apellidos'=>$attributes['last_name'],
+                            'nombres' => strtoupper($attributes['first_name']) ,
+                            'apellidos'=>strtoupper($attributes['last_name']),
                             'fnacimiento'=>isset($attributes['birthday']) ? $attributes['birthday'] : null,
                             'sexo'=>$attributes['gender'],
                         ]);
@@ -361,8 +362,8 @@ class SiteController extends Controller
                                 'username' => $attributes['emails'],
                                 'email' => $attributes['emails'],
                                 'password' => $password,
-                                'nombres' => $attributes['person']['givenName'],
-                                'apellidos'=>$attributes['person']['familyName'],
+                                'nombres' => strtoupper($attributes['person']['givenName']),
+                                'apellidos'=>strtoupper($attributes['person']['familyName']),
                                 'fnacimiento'=>isset($attributes['birthday']) ? $attributes['birthday'] : null,
                                 'sexo'=>isset($attributes['gender']) ? $attributes['gender'] : null
                             ]);

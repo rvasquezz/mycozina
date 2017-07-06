@@ -3,14 +3,15 @@
 namespace frontend\controllers;
 
 use Yii;
-
-use yii\web\NotFoundHttpException;
+use frontend\models\Perfil;
+use frontend\models\PerfilSearch;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
-class FoodController extends Controller
+class ChefController extends Controller
 {
 
     /**
@@ -19,13 +20,15 @@ class FoodController extends Controller
      */
     public function actionIndex()
     {
-        // $searchModel = new UserSearch();
-        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    
+        
 
-        // return $this->render('index', [
-        //     'searchModel' => $searchModel,
-        //     'dataProvider' => $dataProvider,
-        // ]);
+        $searchModel = new PerfilSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
     }
 
     // protected function findModel($id)
