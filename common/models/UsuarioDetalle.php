@@ -45,7 +45,7 @@ class UsuarioDetalle extends \yii\db\ActiveRecord
     {
         return [
             [['id_usuario'], 'required'],
-            [['id_tipo_usuario', 'id_cuenta_bancaria', 'id_ubicacion', 'id_usuario'], 'integer'],
+            [['id_tipo_usuario', 'id_ubicacion', 'id_usuario'], 'integer'],
             [['fecha_create'], 'safe'],
             [['comentario'], 'string', 'max' => 255],
         ];
@@ -59,7 +59,6 @@ class UsuarioDetalle extends \yii\db\ActiveRecord
         return [
             'id_usuario_det' => Yii::t('app', 'Id Usuario Det'),
             'id_tipo_usuario' => Yii::t('app', 'Id Tipo Usuario'),
-            'id_cuenta_bancaria' => Yii::t('app', 'Id Cuenta Bancaria'),
             'id_ubicacion' => Yii::t('app', 'Id Ubicacion'),
             'id_usuario' => Yii::t('app', 'Id Usuario'),
             'fecha_create' => Yii::t('app', 'Fecha Create'),

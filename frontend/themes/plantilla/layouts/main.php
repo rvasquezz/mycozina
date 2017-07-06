@@ -55,7 +55,7 @@ use yii\widgets\Breadcrumbs;
                                 <div class="dropdown-menu"> <a class="dropdown-item" href="restaurants.php">Search results</a> <a class="dropdown-item" href="profile.php">Profile page</a></div>
                             </li>
                             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                <div class="dropdown-menu"> <a class="dropdown-item" href="pricing.php">Pricing</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/contact"]) ?>">Contact</a> <a class="dropdown-item" href="submition.php">Submit restaurant</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/registration"]) ?>">Registration</a>
+                                <div class="dropdown-menu"> <a class="dropdown-item" href="pricing.php">Pricing</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/contact"]) ?>">Contact</a> <a class="dropdown-item" href="submition.php">Submit restaurant</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/signup"]) ?>">Registration</a>
                                     <div class="dropdown-divider"></div> <a class="dropdown-item" href="checkout.php">Checkout</a> </div>
                             </li>
 

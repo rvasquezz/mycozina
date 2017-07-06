@@ -1,0 +1,39 @@
+<?php
+
+namespace frontend\controllers;
+
+use Yii;
+
+use yii\web\NotFoundHttpException;
+use yii\web\Controller;
+
+/**
+ * UserController implements the CRUD actions for User model.
+ */
+class FoodController extends Controller
+{
+
+    /**
+     * Lists all User models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        // $searchModel = new UserSearch();
+        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
+    }
+
+    // protected function findModel($id)
+    // {
+    //     if (($model = User::findOne($id)) !== null) {
+    //         return $model;
+    //     } else {
+    //         throw new NotFoundHttpException('The requested page does not exist.');
+    //     }
+    // }
+}
