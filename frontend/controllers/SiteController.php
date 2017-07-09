@@ -241,11 +241,6 @@ class SiteController extends Controller
         return $this->render('registration');
     }
 
-    //food resultado
-    public function actionFoodResultado() 
-    {
-        return $this->render('food_results');
-    }
     //mapa resultado
     public function actionMapaResultado() 
     {

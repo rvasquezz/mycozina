@@ -30,7 +30,18 @@ class ChefController extends Controller
             'dataProvider' => $dataProvider
         ]);
     }
+    public function actionFood()
+    {
+    
+        
 
+        $searchModel = new PerfilSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('food', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
+    }
     // protected function findModel($id)
     // {
     //     if (($model = User::findOne($id)) !== null) {

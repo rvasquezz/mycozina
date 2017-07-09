@@ -3,12 +3,14 @@
 use yii\helpers\Html;
 use yii\widgets\Menu;
 use yii\widgets\Breadcrumbs;
-
+use yii\helpers\Url;
 /**
  * @var $this \yii\base\View
  * @var $content string
  */
 // $this->registerAssetBundle('app');
+$asset= frontend\assets\AppAsset::register($this);
+$baseUrl = $asset->baseUrl;
 ?>
 <?php $this->beginPage(); ?>
 
@@ -16,28 +18,25 @@ use yii\widgets\Breadcrumbs;
 <html lang="en">
 
 <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="icon" href="#">
-        <title>Starter Template for Bootstrap</title>
-        
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="#">
+    <title>Starter Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link href="<?php echo $this->theme->baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo $this->theme->baseUrl ?>/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?php echo $this->theme->baseUrl ?>/css/animsition.min.css" rel="stylesheet">
+    <link href="<?php echo $this->theme->baseUrl ?>/css/animate.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="<?php echo $this->theme->baseUrl ?>/css/style.css" rel="stylesheet"> </head>
 
-        <link href="<?php echo $this->theme->baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
-        <link href="<?php echo $this->theme->baseUrl ?>/css/font-awesome.min.css" rel="stylesheet">
-        <link href="<?php echo $this->theme->baseUrl ?>/css/animsition.min.css" rel="stylesheet">
-        <link href="<?php echo $this->theme->baseUrl ?>/css/animate.css" rel="stylesheet">
-        <!-- Custom styles for this template -->
-        <link href="<?php echo $this->theme->baseUrl ?>/css/style.css" rel="stylesheet">
-    </head>
-    
 <body class="home">
 <?php $this->beginBody() ?>
-  <!-- <div class="site-wrapper animsition" data-animsition-in="fade-in" data-animsition-out="fade-out"> -->
-     <!-- <div class="site-wrapper " > -->
+    <div class="site-wrapper animsition" data-animsition-in="fade-in" data-animsition-out="fade-out">
         <!--header starts-->
         <header id="header" class="header-scroll top-header headrom">
             <!-- .navbar -->
@@ -49,10 +48,10 @@ use yii\widgets\Breadcrumbs;
                         <ul class="nav navbar-nav">
                             <li class="nav-item"> <a class="nav-link active" href="<?= yii\helpers\Url::to(["/site/index"]) ?>">Home <span class="sr-only">(current)</span></a> </li>
                             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Food</a>
-                                <div class="dropdown-menu"> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/food-resultado"]) ?>">Food results</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/mapa-resultado"]) ?>">Map results</a></div>
+                                <div class="dropdown-menu"> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/chef/food"]) ?>">Food results</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/mapa-resultado"]) ?>">Map results</a></div>
                             </li>
                             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Restaurants</a>
-                                <div class="dropdown-menu"> <a class="dropdown-item" href="restaurants.php">Search results</a> <a class="dropdown-item" href="profile.php">Profile page</a></div>
+                                <div class="dropdown-menu"> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/chef/index"]) ?>">Search results</a> <a class="dropdown-item" href="profile.php">Profile page</a></div>
                             </li>
                             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
                                 <div class="dropdown-menu"> <a class="dropdown-item" href="pricing.php">Pricing</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/contact"]) ?>">Contact</a> <a class="dropdown-item" href="submition.php">Submit restaurant</a> <a class="dropdown-item" href="<?= yii\helpers\Url::to(["/site/signup"]) ?>">Registration</a>
@@ -80,52 +79,21 @@ use yii\widgets\Breadcrumbs;
             </nav>
             <!-- /.navbar -->
         </header>
-     
+ 
 
-   
-       
-           <div class="page-wrapper">
-
-                <?= $content; ?>
-                
-           </div>
-
-
-        <!-- Featured restaurants ends -->
-        <section class="app-section">
-            <div class="app-wrap">
-                <div class="container">
-                    <div class="row text-img-block text-xs-left">
-                        <div class="container">
-                            <div class="col-xs-12 col-sm-5 right-image text-center">
-                                <figure> <img src="<?php echo $this->theme->baseUrl ?>/images/app.png" alt="Right Image" class="img-fluid"> </figure>
-                            </div>
-                            <div class="col-xs-12 col-sm-7 left-text">
-                                <h3>The Best Food Delivery App</h3>
-                                <p>Now you can make food happen pretty much wherever you are thanks to the free easy-to-use Food Delivery &amp; Takeout App.</p>
-                                <div class="social-btns">
-                                    <a href="#" class="app-btn apple-button clearfix">
-                                        <div class="pull-left"><i class="fa fa-apple"></i> </div>
-                                        <div class="pull-right"> <span class="text">Available on the</span> <span class="text-2">App Store</span> </div>
-                                    </a>
-                                    <a href="#" class="app-btn android-button clearfix">
-                                        <div class="pull-left"><i class="fa fa-android"></i> </div>
-                                        <div class="pull-right"> <span class="text">Available on the</span> <span class="text-2">Play store</span> </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- location match part ends -->
+        <!-- Popular block starts -->
+        <section class="popular">
+          <?= $content ?>
         </section>
+
         <!-- start: FOOTER -->
         <footer class="footer">
             <div class="container">
                 <!-- top footer statrs -->
                 <div class="row top-footer">
                     <div class="col-xs-12 col-sm-3 footer-logo-block color-gray">
-                        <a href="#"> <img src="<?php echo $this->theme->baseUrl ?>/images/nombre.png" alt="Footer logo"> </a> <span>Order Delivery &amp; Take-Out </span> </div>
+                        <a href="#"> <img src="<?php echo $this->theme->baseUrl ?>/images/food-picky-logo.png" alt="Footer logo"> </a> <span>Order Delivery &amp; Take-Out </span> </div>
                     <div class="col-xs-12 col-sm-2 about color-gray">
                         <h5>About Us</h5>
                         <ul>
@@ -209,13 +177,11 @@ use yii\widgets\Breadcrumbs;
             </div>
         </footer>
         <!-- end:Footer -->
-    <!-- </div> -->
+    </div>
     <!--/end:Site wrapper -->
     <!-- Bootstrap core JavaScript
     ================================================== -->
-
-
-   <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.min.js"></script>
+    <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/tether.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/animsition.min.js"></script>
@@ -223,19 +189,7 @@ use yii\widgets\Breadcrumbs;
     <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.isotope.min.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/headroom.js"></script>
     <script src="<?php echo $this->theme->baseUrl ?>/js/foodpicky.min.js"></script>
-
-<!--     <script src="<?php echo $this->theme->baseUrl ?>/js/tether.min.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap.min.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/animsition.min.js"></script> 
-    <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap-slider.min.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.isotope.min.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/headroom.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/foodpicky.min.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/bootstrap-slider.min.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/markerclusterer.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/jquery.googlemap.js"></script>
-    <script src="<?php echo $this->theme->baseUrl ?>/js/data.json"></script> -->
-    <?php $this->endBody(); ?>
+<?php $this->endBody(); ?>
 </body>
+
 </html>
-<?php $this->endPage(); ?>

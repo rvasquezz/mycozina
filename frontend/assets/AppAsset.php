@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
- public $sourcePath = '@app/themes/plantilla';
+ public $sourcePath = '@app/themes/plantilla/';
 
     public $css = [
         'css/animate.css',
@@ -45,5 +45,6 @@ class AppAsset extends AssetBundle
     ];
     public $depends = [
         // 'yii\web\YiiAsset',
+        // 'yii\bootstrap\BootstrapAsset',
     ];
 }

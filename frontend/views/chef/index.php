@@ -4,6 +4,7 @@ use yii\bootstrap\Html;
 use yii\helpers\Url;
 
 ?>
+
             <!-- top Links -->
             <div class="top-links">
                 <div class="container">
@@ -149,8 +150,10 @@ use yii\helpers\Url;
                          'filterModel' => $searchModel,
                          'id'=>'chef',
                          'responsive'=>true,
-                          'containerOptions' => ['class'=>'bg-gray restaurant-entry'], // only set when $responsive = false
+                         'containerOptions' => ['class'=>'bg-gray restaurant-entry'], // only set when $responsive = false
                          'hover'=>false,
+                         'resizableColumns'=>false,
+                         'persistResize'=>false,
                          'export'=>false,
                          'columns' => [
 
@@ -189,7 +192,7 @@ use yii\helpers\Url;
                                                                 <div class="right-review">
                                                                     <div class="rating-block"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> 
                                                                     </div>
-                                                                    <p> 245 Reviews</p> <a href="'.$model->id_usuario.'" class="btn theme-btn-dash">Ver Menu</a> 
+                                                                    <p> 245 Reviews</p> <a href="'.Url::to(["/chef/food","id"=>$model->id_usuario]).'" class="btn theme-btn-dash">Ver Menu</a> 
                                                                 </div>
                                                             </div>
                                                         </div>
